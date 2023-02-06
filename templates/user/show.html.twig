@@ -3,25 +3,13 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>Profil</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
+                <th>Avatar</th>
+                <td>{{ user.avatar }}</td>
             </tr>
             <tr>
                 <th>Firstname</th>
@@ -32,8 +20,8 @@
                 <td>{{ user.lastname }}</td>
             </tr>
             <tr>
-                <th>Avatar</th>
-                <td>{{ user.avatar }}</td>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
             </tr>
             <tr>
                 <th>Location</th>
@@ -46,9 +34,29 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    {% if (app.user.id == user.id) %}
+        <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+        {{ include('user/_delete_form.html.twig') }}
+    {% endif %}
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+    <h1>Mes bières</h1>
 
-    {{ include('user/_delete_form.html.twig') }}
+    {% if (app.user.id == user.id) %}
+        <a href="{{ path('app_beer_new') }}">Create new</a>
+    {% endif %}
+
+    {% for beer in beers %}
+        <div>
+            <h3><a href="{{ path('app_beer_show', {id : beer.id}) }}">{{ beer.name }}</a></h3>
+            <p>{{ beer.description }}</p>
+            <p>{{ beer.alcohol_content }}</p>
+            <p>{{ beer.category_id }}</p>
+            {% if (app.user.id == beer.created_by_id) %}
+            <a href="{{ path('app_beer_edit', {'id': beer.id}) }}">edit</a>
+            {{ include('beer/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+    {% else %}
+        Aucune bière trouvée.
+    {% endfor %}
 {% endblock %}

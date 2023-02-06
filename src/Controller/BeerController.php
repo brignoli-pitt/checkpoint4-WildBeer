@@ -29,6 +29,7 @@ class BeerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $beer->setCreatedBy($this->getUser());
             $beerRepository->save($beer, true);
 
             return $this->redirectToRoute('app_beer_index', [], Response::HTTP_SEE_OTHER);
@@ -55,6 +56,7 @@ class BeerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $beer->setCreatedBy($this->getUser());
             $beerRepository->save($beer, true);
 
             return $this->redirectToRoute('app_beer_index', [], Response::HTTP_SEE_OTHER);

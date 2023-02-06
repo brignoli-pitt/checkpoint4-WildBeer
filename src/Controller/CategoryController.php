@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Beer;
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\BeerRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,10 +44,16 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
-    public function show(Category $category): Response
+    public function show(CategoryRepository $categoryRepository,int $id, BeerRepository $beerRepository, Beer $beer): Response
     {
+        $category = $categoryRepository->findOneBy(['id' => $id]);
+        $beers = $beerRepository->findBy(['category' => $category]);
+        $user = $beer->getCreatedBy()->getFullName();
+
         return $this->render('category/show.html.twig', [
             'category' => $category,
+            'beers' => $beers,
+            'user' => $user,
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\BeerRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,10 +42,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
+    public function show(User $user, BeerRepository $beerRepository): Response
     {
+        //$currentUser = $this->getUser()->getId();
+        $beers = $beerRepository->findBeersForUser($user->getId());
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'beers' => $beers
         ]);
     }
 
