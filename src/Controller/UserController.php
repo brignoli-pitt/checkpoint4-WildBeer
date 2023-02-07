@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\BeerRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,19 +43,23 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user, BeerRepository $beerRepository): Response
+    public function show(User $user, BeerRepository $beerRepository, CategoryRepository $categoryRepository): Response
     {
-        //$currentUser = $this->getUser()->getId();
         $beers = $beerRepository->findBeersForUser($user->getId());
+        $categories = $categoryRepository->findAll();
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
-            'beers' => $beers
+            'beers' => $beers,
+            'categories' => $categories,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, CategoryRepository $categoryRepository): Response
     {
+        $categories = $categoryRepository->findAll();
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -67,6 +72,7 @@ class UserController extends AbstractController
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
+            'categories' => $categories,
         ]);
     }
 

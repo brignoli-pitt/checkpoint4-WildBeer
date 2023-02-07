@@ -4,17 +4,14 @@
 
 {% block body %}
 
-    <div>
-        <h1>Catégories</h1>
-        {% for category in categories %}
-        <a href="{{ path('app_category_show', {id : category.id}) }}">
-            <div>
-                <h2>{{ category.name }}</h2>
-            </div>
-        </a>
-        {% else %}
-            Aucune Catégorie trouvée.
-        {% endfor %}
+    <div class="wild-home-cat-container">
+        <div class="list-group">
+            {% for category in categories %}
+            <a href="{{ path('app_category_show', {id : category.id}) }}" class="list-group-item list-group-item-action">{{ category.name }}</a>
+            {% else %}
+                <a class="list-group-item list-group-item-action disabled">Aucune Catégorie trouvée.</a>
+            {% endfor %}
+        </div>
     </div>
     <div>
         <h1>Wilder créateur</h1>
@@ -27,5 +24,24 @@
         {% else %}
             Aucune Wilder créateur trouvé.
         {% endfor %}
+    </div>
+
+    <div>
+        <div class="accordion w-75" id="accordionExample">
+            {% for category in categories %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ category.name }}" aria-expanded="true" aria-controls="collapse{{ category.name }}">
+                            Bière {{ category.name }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ category.name }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

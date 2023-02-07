@@ -49,9 +49,11 @@ class CategoryController extends AbstractController
         $category = $categoryRepository->findOneBy(['id' => $id]);
         $beers = $beerRepository->findBy(['category' => $category]);
         $user = $beer->getCreatedBy()->getFullName();
+        $categories = $categoryRepository->findAll();
 
         return $this->render('category/show.html.twig', [
             'category' => $category,
+            'categories' => $categories,
             'beers' => $beers,
             'user' => $user,
         ]);
