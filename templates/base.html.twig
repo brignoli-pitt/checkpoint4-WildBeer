@@ -39,8 +39,13 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_category_index') }}">Catégories</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Catégories</a>
+                            <ul class="dropdown-menu">
+                                {% for category in categories %}
+                                <li><a class="dropdown-item" href="{{ path('app_category_show', {id : category.id}) }}">{{ category.name }}</a></li>
+                                {% endfor %}
+                            </ul>
                         </li>
                         {% if app.user %}
                             <li>
