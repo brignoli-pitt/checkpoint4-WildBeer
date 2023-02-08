@@ -3,39 +3,31 @@
 {% block title %}Beer index{% endblock %}
 
 {% block body %}
-    <h1>Beer index</h1>
 
-    <table class="table">
-        <thead>
+    <div class="card mb-5 mt-2 w-75 p-3 text-center m-auto border-0 shadow-sm">
+        <h1>Bières</h1>
+        <table class="table">
+            <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Description</th>
-                <th>AlcoholContent</th>
-                <th>Picture</th>
-                <th>actions</th>
+                <th>Alc% </th>
             </tr>
-        </thead>
-        <tbody>
-        {% for beer in beers %}
-            <tr>
-                <td>{{ beer.id }}</td>
-                <td>{{ beer.name }}</td>
-                <td>{{ beer.description }}</td>
-                <td>{{ beer.alcoholContent }}</td>
-                <td>{{ beer.picture }}</td>
-                <td>
-                    <a href="{{ path('app_beer_show', {'id': beer.id}) }}">show</a>
-                    <a href="{{ path('app_beer_edit', {'id': beer.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for beer in beers %}
+                <tr>
+                    <td>{{ beer.name }}</td>
+                    <td>{{ beer.description }}</td>
+                    <td>{{ beer.alcoholContent }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Pas de bière trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_beer_new') }}">Create new</a>
 {% endblock %}

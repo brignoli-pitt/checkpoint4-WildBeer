@@ -6,10 +6,12 @@ use App\Entity\Beer;
 use App\Form\BeerType;
 use App\Repository\BeerRepository;
 use App\Repository\CategoryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/beer')]
 class BeerController extends AbstractController
@@ -25,6 +27,7 @@ class BeerController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_beer_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BeerRepository $beerRepository, CategoryRepository $categoryRepository): Response
     {
@@ -61,6 +64,11 @@ class BeerController extends AbstractController
     #[Route('/{id}/edit', name: 'app_beer_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Beer $beer, BeerRepository $beerRepository, CategoryRepository $categoryRepository): Response
     {
+        if ($this->getUser() !== $beer->getCreatedBy()) {
+
+            throw $this->createAccessDeniedException('Seul le Wilder créateur peut modifier cette bière');
+        }
+
         $categories = $categoryRepository->findAll();
 
         $form = $this->createForm(BeerType::class, $beer);
@@ -83,6 +91,11 @@ class BeerController extends AbstractController
     #[Route('/{id}', name: 'app_beer_delete', methods: ['POST'])]
     public function delete(Request $request, Beer $beer, BeerRepository $beerRepository): Response
     {
+        if ($this->getUser() !== $beer->getCreatedBy()) {
+
+            throw $this->createAccessDeniedException('Seul le Wilder créateur peut modifier cette bière');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$beer->getId(), $request->request->get('_token'))) {
             $beerRepository->remove($beer, true);
         }
