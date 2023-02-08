@@ -15,7 +15,7 @@ class BeerType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('alcoholContent')
-            ->add('picture')
+            //->add('picture')
             ->add('category', null, [
                 'placeholder' => 'Choisi une catégorie',
                 'choice_label' => 'name'

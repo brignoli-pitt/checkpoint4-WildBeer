@@ -3,29 +3,33 @@
 {% block title %}Beer{% endblock %}
 
 {% block body %}
-    <div>
-        <h1>{{ beer.name }}</h1>
-    </div>
-    <div>
-        <div>
-            <h3>Description</h3>
-            <p>{{ beer.description }}</p>
-        </div>
-        <div>
-            <div>
-                <h3>Catégorie:</h3>
-                <p>{{ beer.category.name }}</p>
+
+    <div class="card mb-5 mt-2 w-50 p-3 text-center m-auto border-0 shadow-lg">
+        <img src="{{ asset('build/img/beer-show.a2519858.png') }}" class="card-img-top rounded" alt="some beer">
+        <div class="card-body m-3">
+            <div class="m-3">
+                <h1 class="card-title ">La bière {{ beer.name }}</h1>
             </div>
-            <div>
-                <h3>Teneur en alcool:</h3>
-                <p>{{ beer.alcoholContent }}</p>
+            <div class="mt-5">
+                <h6 class="card-text ">
+                    {{ beer.description }}
+                </h6>
             </div>
-            <div>
-                <h3>Crée par:</h3>
-                <p>{{ beer.createdBy.fullName }}</p>
+            <div class="d-flex justify-content-between m-3 mt-5">
+                <div>
+                    <h6>Catégorie</h6>
+                    <h4>{{ beer.category.name }}</h4>
+                </div>
+                <div>
+                    <h6>Alc %</h6>
+                    <h4>{{ beer.alcoholContent }}</h4>
+                </div>
+                <div>
+                    <h6>Créateur</h6>
+                    <h4>{{ beer.createdBy.fullName }}</h4>
+                </div>
             </div>
         </div>
     </div>
 
-    <a href="{{ path('app_beer_edit', {'id': beer.id}) }}">edit</a>
 {% endblock %}

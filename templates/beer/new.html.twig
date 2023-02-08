@@ -3,9 +3,14 @@
 {% block title %}New Beer{% endblock %}
 
 {% block body %}
-    <h1>Create new Beer</h1>
-
-    {{ include('beer/_form.html.twig') }}
-
-    <a href="{{ path('app_beer_index') }}">back to list</a>
+    <div class="text-center min-vh-100 d-flex justify-content-center">
+        <div class="card form-signin w-25 align-self-center text-center shadow-lg">
+            <div class="mt-5">
+                <h1>Ajouter une bière</h1>
+            </div>
+            <div class="m-5 p-1">
+                {{ include('beer/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

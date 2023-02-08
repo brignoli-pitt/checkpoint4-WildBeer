@@ -4,44 +4,48 @@
 
 {% block body %}
 
-    <div class="wild-home-cat-container">
-        <div class="list-group">
+    <div class="card mb-5 mt-2 w-75 p-3 text-center m-auto border-0 shadow-lg">
+        <img src="{{ asset('build/img/beer-chichi.1cf9443f.png') }}" class="card-img-top rounded" alt="some beer">
+        <div class="card-body m-3">
+            <div class="m-3">
+                <h1 class="card-title ">Bienvenue sur Wild Beer</h1>
+            </div>
+            <div class="mt-5">
+                <h6 class="card-text ">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                    Quis varius quam quisque id diam vel quam elementum.
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit duis tristique.
+                    Erat pellentesque adipiscing commodo elit. Cras fermentum odio eu feugiat pretium.
+                    Aliquam nulla facilisi cras fermentum. Venenatis urna cursus eget nunc scelerisque viverra mauris in aliquam.
+                    Leo duis ut diam quam nulla porttitor massa. Ornare aenean euismod elementum nisi quis eleifend quam.
+                    Tellus elementum sagittis vitae et. Sed arcu non odio euismod lacinia at quis risus sed.
+                    Mauris in aliquam sem fringilla ut morbi tincidunt. Eu feugiat pretium nibh ipsum consequat nisl vel.
+                    Velit sed ullamcorper morbi tincidunt ornare massa eget egestas.
+                    Orci dapibus ultrices in iaculis nunc sed augue lacus viverra.
+                    Leo a diam sollicitudin tempor id eu nisl nunc. Mauris sit amet massa vitae tortor condimentum.
+                </h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-center m-auto w-75 shadow-lg">
+        <div class="mt-4">
+            <h1 class="card-title ">Les bières</h1>
+        </div>
+        <div class="m-5 gap-2">
             {% for category in categories %}
-            <a href="{{ path('app_category_show', {id : category.id}) }}" class="list-group-item list-group-item-action">{{ category.name }}</a>
+            <a href="{{ path('app_category_show', {id : category.id}) }}"
+               class="btn btn-sm btn-outline-secondary w-50 m-2">{{ category.name }}
+            </a>
             {% else %}
                 <a class="list-group-item list-group-item-action disabled">Aucune Catégorie trouvée.</a>
             {% endfor %}
         </div>
     </div>
-    <div>
-        <h1>Wilder créateur</h1>
-        {% for user in users %}
-            <a href="{{ path('app_user_show', {id : user.id}) }}">
-                <div>
-                    <h2>{{ user.lastname }} {{ user.firstname }}</h2>
-                </div>
-            </a>
-        {% else %}
-            Aucune Wilder créateur trouvé.
-        {% endfor %}
-    </div>
 
-    <div>
-        <div class="accordion w-75" id="accordionExample">
-            {% for category in categories %}
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ category.name }}" aria-expanded="true" aria-controls="collapse{{ category.name }}">
-                            Bière {{ category.name }}
-                        </button>
-                    </h2>
-                    <div id="collapse{{ category.name }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
 {% endblock %}

@@ -11,15 +11,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, CategoryRepository $categoryRepository ): Response
     {
+        $categories = $categoryRepository->findAll();
+
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'categories' => $categories,
         ]);
     }
 
@@ -58,6 +62,7 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, CategoryRepository $categoryRepository): Response
     {
+
         $categories = $categoryRepository->findAll();
 
         $form = $this->createForm(UserType::class, $user);

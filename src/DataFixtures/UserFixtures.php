@@ -34,7 +34,8 @@ class UserFixtures extends Fixture
         foreach (self::USERS as $key => $firstname) {
             $user = new User();
             $user->setFirstname($firstname);
-            $user->setLastname('Fifou');
+            $user->setLastname('"Fifou"');
+            $user->setRoles(["ROLE_ADMIN"]);
             $user->setEmail($faker->email);
             $user->setLocation($faker->city);
             $user->setDescription($faker->paragraphs(1, true));
